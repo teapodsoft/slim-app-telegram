@@ -4,6 +4,7 @@ namespace Teapodsoft\Actions;
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
+use OpenApi\Attributes as OA;
 
 /**
  * TestAction
@@ -20,6 +21,14 @@ final class TestAction extends Action
      * @param array $args
      * @return Response
      */
+    #[OA\Get(
+        path: '/',
+        description: 'Main Application Url',
+    )]
+    #[OA\Response(
+        response: 200,
+        description: 'OK',
+    )]
     public function __invoke(Request $request, Response $response, array $args = []): Response
     {
         $response->getBody()->write($this->json($this->getData()));
