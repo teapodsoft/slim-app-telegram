@@ -1,0 +1,8 @@
+services:
+
+  memcached:
+    image: memcached:latest
+    ports:
+      - ${MEMCACHED_PORT}:11211
+    command:
+      - "--memory-limit=64"

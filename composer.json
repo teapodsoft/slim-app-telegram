@@ -1,0 +1,88 @@
+{
+    "name": "teapoddev/slim-app-template",
+    "description": "TeapodSoft Slim Framework Template",
+    "type": "project",
+    "license": "TeapodSoft",
+    "minimum-stability": "stable",
+    "version": "1.0.0",
+    "revision": "20260121",
+    "authors": [
+        {
+            "name": "Yury Pavlushchenko",
+            "email": "iam@bifik.ru",
+            "homepage": "https://bifik.ru",
+            "role": "Main Developer"
+        },
+        {
+            "name": "Teapod Soft",
+            "email": "dev@teapodsoft.ru",
+            "homepage": "https://teapodsoft.ru",
+            "role": "Develop Team"
+        }
+    ],
+    "require": {
+        "php": ">=8.4",
+        "php-di/php-di": "^7.1",
+        "slim/psr7": "1.8.*",
+        "slim/slim": "4.*",
+        "composer/composer": "*",
+        "teapodlibs/secrets": "1.0.0",
+        "teapodlibs/env": "1.0.0"
+    },
+    "require-dev": {
+        "ext-json": "*",
+        "jangregor/phpstan-prophecy": "2.*",
+        "phpspec/prophecy-phpunit": "v2.4.*",
+        "phpstan/extension-installer": "1.4.*",
+        "phpstan/phpstan": "2.1.*",
+        "phpunit/phpunit": "12.5.*",
+        "squizlabs/php_codesniffer": "4.0.*"
+    },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        },
+        "process-timeout": 0,
+        "sort-packages": true,
+        "platform": {
+            "php": "8.4.8"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Teapodsoft\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Teapodsoft\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "Teapodsoft\\Composer\\Installer::postInstall": {
+            "copyFiles": [
+                {
+                    "secrets/secrets.example.json": "secrets/secrets.json"
+                }
+            ],
+            "createPaths": [
+                {
+                    "runtime": "0777"
+                }
+            ]
+        }
+    },
+    "scripts": {
+        "post-install-cmd": [
+            "Teapodsoft\\Composer\\Installer::postInstall"
+        ],
+        "check": [
+            "@test:coverage"
+        ],
+        "test": "phpunit --do-not-cache-result --colors=always",
+        "test:coverage": [
+            "@putenv XDEBUG_MODE=coverage",
+            "phpunit --do-not-cache-result --colors=always --coverage-clover build/coverage/clover.xml --coverage-html build/coverage --coverage-text"
+        ]
+    }
+}

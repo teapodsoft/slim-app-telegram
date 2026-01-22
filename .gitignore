@@ -1,0 +1,26 @@
+# Ignore IDEs directory
+.idea
+.vscode
+nbproject
+
+# Ignore project directory
+/vendor
+/logs
+/runtime
+.DS_Store
+.vargrant/
+./docker/databases/*
+
+# Ignore main files
+.env
+secrets.json
+Thumbs.db
+composer.phar
+phpunit.phar
+/phpunit.xml
+
+# Ignore config files for tests and other
+.phpunit.result.cache
+tests/_output/*
+tests/_support/_generated
+
