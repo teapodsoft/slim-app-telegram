@@ -1,3 +1,3 @@
-# TeapodDev Slim Application Template
+# Teapod Slim Application Telegram 
 
-Базовое приложение для работы с фреймворком Slim 
+Приложение для работы с Telegram API  
