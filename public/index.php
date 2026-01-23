@@ -18,6 +18,10 @@ $containerBuilder = new ContainerBuilder();
 $settings = require dirname(__DIR__) . '/configs/settings.php';
 $settings($containerBuilder);
 
+// Загрузка настроек для бота в приложение
+$botCommands = require dirname(__DIR__) . '/configs/bot_commands.php';
+$botCommands($containerBuilder);
+
 // Загрузка все репозиториев (entity) для работы (базы и прочее)
 $repositories = require dirname(__DIR__) . '/configs/repositories.php';
 $repositories($containerBuilder);
