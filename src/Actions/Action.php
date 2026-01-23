@@ -7,6 +7,7 @@ use Psr\Container\ContainerInterface as Container;
 use Psr\Container\NotFoundExceptionInterface;
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Teapodsoft\Telegram\Commands\InterfaceCommand;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Client;
 
@@ -82,6 +83,18 @@ abstract class Action implements InterfaceAction
     {
         //TODO: Обезопаститься от @throws
         return $this->container->get('botClient');
+    }
+
+    /**
+     * Получить все значения, которые были сохранены в файле configs/bot_commands.php
+     *
+     * @return array
+     * @throws ContainerExceptionInterface
+     * @throws NotFoundExceptionInterface
+     */
+    protected function getTelegramCommands(): array
+    {
+        return $this->container->get(InterfaceCommand::class);
     }
 
 }
