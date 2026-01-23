@@ -4,7 +4,7 @@
     "type": "project",
     "license": "TeapodSoft",
     "minimum-stability": "stable",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "revision": "20260123",
     "authors": [
         {
@@ -20,6 +20,10 @@
             "role": "Develop Team"
         }
     ],
+    "support": {
+        "issues": "https://github.com/teapodsoft/slim-app-telegram/issues",
+        "source": "https://github.com/teapodsoft/slim-app-telegram"
+    },
     "require": {
         "php": ">=8.4",
         "composer/composer": "*",
