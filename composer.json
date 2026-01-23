@@ -4,8 +4,8 @@
     "type": "project",
     "license": "TeapodSoft",
     "minimum-stability": "stable",
-    "version": "1.0.0",
-    "revision": "20260122",
+    "version": "1.0.1",
+    "revision": "20260123",
     "authors": [
         {
             "name": "Yury Pavlushchenko",
