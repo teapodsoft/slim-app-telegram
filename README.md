@@ -95,6 +95,58 @@ cp secrets/secrets.example.json secrets/secrets.json
 
 ```
 
+# Работа с Telegram Bot Webhook
+
+## Установка webhook
+
+В рамках использования подхода webhook требуется отправить запрос в Telegram Bot API с указанием ссылки, на которую
+будут отправляться запросы, когда пользователи пишут боту. Для этого, после разворота требуется открыть в браузере
+ссылку http://bots.my-domain.ltd/hook/set
+
+В ответ вы получите результат, что webhook установлен:
+
+```json
+{
+    "setWebhook": true
+}
+```
+
+## Проверка текущего состояния
+
+Для проверки установленного webhook можете воспользоваться ссылкой https://bots.my-domain.ltd/hook/get
+
+В ответ вы получите результат с информацией об установке:
+
+```json
+{
+    "hook": {
+        "url": "https://bots.my-domain.ltd/webhook",
+        "has_custom_certificate": false,
+        "pending_update_count": 0,
+        "ip_address": "1.1.1.1",
+        "max_connections": 40
+    }
+}
+```
+
+## Удаление установленного webhook
+
+В случае если вам требуется удалить привязку Telegram бота от webhook - воспользуйтесь
+ссылкой https://bots.my-domain.ltd/hook/delete
+
+В ответ вы получите результат
+
+```json
+{
+    "hook": "true"
+}
+```
+
+## Работа со Swagger
+
+Приложение поддерживает Swagger. Вы можете получить список всех доступных для работы ссылок, обратившись по
+ссылке https://bots.my-domain.ltd/json-schema
+
 # Настройка своих команд для Telegram Bot
 
 Для того, что бы настроить свои команды для работы потребуется
@@ -125,6 +177,7 @@ final class TimeCommand extends Command
 configs/bot_settings.php добавить в список ваш класс для работы:
 
 Пример настроек:
+
 ```php
 <?php
 
