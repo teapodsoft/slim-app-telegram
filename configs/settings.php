@@ -9,7 +9,7 @@ use Teapodsoft\Applications\Settings\SettingsInterface;
 /**
  * Загрузка контейнера с настройками для дальнейшего использования внутри приложения
  */
-return function (ContainerBUilder $containerBuilder) {
+return function (ContainerBuilder $containerBuilder) {
     $containerBuilder->addDefinitions([
         SettingsInterface::class => function () {
             return new Settings([
