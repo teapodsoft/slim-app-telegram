@@ -14,19 +14,21 @@ Telegram.
 
 ```
 configs/                    Файлы настроек приложения  
+    config.php              Файл с настройками приложения  
+    routes.php              Файл с настройками ссылок и обработчиков
 docker/                     Директория для создания образа Docker        
 public/                     Основная директория работы приложения
     index.php               Основной файл для работы приложения 
 secrets/                    Директория с секретными данными для работы окружения
 src/                        Исходный код приложения
-    Actions/                Диреткория для обработчиков ссылок
-        Swagger/            Директория для работы со Swagger
-        Telegram/           Директория дял работы с Telegram Bot API ссылками
     Applications/           Директория с проектом и необходимым настройками
+        Middlewares/        Директория с обработчиками Middleware
         ResponseEmiter/     Директория с обработчиками Response запросов
         Settings/           Директория с настройками и обработчиками
+    Base/                   Директория с базовыми классами для работы
     Composer/               Директория для работы с Composer и действия postInstall событиями
-    Middlewares/            Обработчики событый между Request и Response 
+    Routes/                 Обработчики для ссылок configs/routes.php 
+        Bot/                Обработчики запросов для Telegram Bot 
     Telegram/               Обработчики для Telegram 
         Commands/           Обработчики команд для Telegram
 tests/                      Тесты для проверки работоспособности
@@ -82,13 +84,10 @@ cp secrets/secrets.example.json secrets/secrets.json
 ```jsonpath
 {
     "project": {
-        // Наименование вашего приложения
         "NAME": "Basic Template Bot API",
-        // Полная ссылка на домен, который будет использоватсья для /webhook условий
         "DOMAIN": "https://bots.my-domain.ltd"
     },
     "telegram": {
-        // Токен, полученный от BotFather
         "TOKEN": "ТОКЕН от BotFather"
     }
 }
@@ -101,44 +100,42 @@ cp secrets/secrets.example.json secrets/secrets.json
 
 В рамках использования подхода webhook требуется отправить запрос в Telegram Bot API с указанием ссылки, на которую
 будут отправляться запросы, когда пользователи пишут боту. Для этого, после разворота требуется открыть в браузере
-ссылку http://bots.my-domain.ltd/hook/set
+ссылку http://bots.my-domain.ltd/bot/hook/set
 
 В ответ вы получите результат, что webhook установлен:
 
 ```json
 {
-    "setWebhook": true
+    "result": true
 }
 ```
 
 ## Проверка текущего состояния
 
-Для проверки установленного webhook можете воспользоваться ссылкой https://bots.my-domain.ltd/hook/get
+Для проверки установленного webhook можете воспользоваться ссылкой https://bots.my-domain.ltd/bot/hook/get
 
 В ответ вы получите результат с информацией об установке:
 
 ```json
 {
-    "hook": {
-        "url": "https://bots.my-domain.ltd/webhook",
-        "has_custom_certificate": false,
-        "pending_update_count": 0,
-        "ip_address": "1.1.1.1",
-        "max_connections": 40
-    }
+    "url": "https://bots.my-domain.ltd/webhook",
+    "has_custom_certificate": false,
+    "pending_update_count": 0,
+    "ip_address": "1.1.1.1",
+    "max_connections": 40
 }
 ```
 
 ## Удаление установленного webhook
 
 В случае если вам требуется удалить привязку Telegram бота от webhook - воспользуйтесь
-ссылкой https://bots.my-domain.ltd/hook/delete
+ссылкой https://bots.my-domain.ltd/bot/hook/delete
 
 В ответ вы получите результат
 
 ```json
 {
-    "hook": "true"
+    "result": true
 }
 ```
 
@@ -162,44 +159,27 @@ cp secrets/secrets.example.json secrets/secrets.json
 
 namespace Teapodsoft\Telegram\Commands;
 
-final class TimeCommand extends Command
+final class TimeCommand extends CommandAbstract
 {
 
-    protected static function returnMessage(): string
+    protected static function getMessage(): string
     {
-        return 'Current Time: '. date('Y-m-d H:i:s', time());
+        return 'Current DateTime: '. date('Y-m-d H:i:s', time());
     }
 
 }
 ```
 
 После проделанных действий требуется включить команду в список доступных для бота. Для этого требуется в файле
-configs/bot_settings.php добавить в список ваш класс для работы:
-
-Пример настроек:
+configs/config.php добавить в список ваш класс для работы.
 
 ```php
 <?php
-
-declare(strict_types=1);
-
-use DI\ContainerBuilder;
-use Teapodsoft\Telegram\Commands\InterfaceCommand;
-use Teapodsoft\Telegram\Commands\StartCommand;
-use Teapodsoft\Telegram\Commands\DemoCommand;
-use Teapodsoft\Telegram\Commands\TimeCommand;
-
-return function (ContainerBuilder $containerBuilder) {
-    $containerBuilder->addDefinitions([
-        InterfaceCommand::class => function () {
-            return [
-                'start' => StartCommand::class,
-                'demo' => DemoCommand::class,
-                'time' => TimeCommand::class,
-                'date' => TimeCommand::class,
-            ];
-        }
-    ]);
-};
-
+    // Настройки Telegram Bot клиента для запуска консольных команд
+    CommandInterface::class => [
+        'start' => \Teapodsoft\Telegram\Commands\StartCommand::class,
+        'demo' => \Teapodsoft\Telegram\Commands\DemoCommand::class,
+        'time' => \Teapodsoft\Telegram\Commands\TimeCommand::class,
+        'date' => \Teapodsoft\Telegram\Commands\TimeCommand::class,
+    ],
 ```
