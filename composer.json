@@ -2,10 +2,9 @@
     "name": "teapodsoft/slim-app-telegram",
     "description": "TeapodSoft Slim Framework Telegram",
     "type": "project",
-    "license": "TeapodSoft",
     "minimum-stability": "stable",
-    "version": "1.0.2",
-    "revision": "20260123",
+    "version": "1.1.0",
+    "revision": "20260126",
     "authors": [
         {
             "name": "Yury Pavlushchenko",
