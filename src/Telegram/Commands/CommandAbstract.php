@@ -2,35 +2,35 @@
 
 namespace Teapodsoft\Telegram\Commands;
 
+use Closure;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Client;
-use Closure;
 use TelegramBot\Api\Types\Message;
 
 /**
- * Command
  *
- * @package Teapodsoft\Telegram\Commands
- * @description Абстрактный класс для работы с командами бота
  */
-abstract class Command implements InterfaceCommand
+abstract class CommandAbstract implements CommandInterface
 {
 
+    /**
+     * @param Client $bot
+     * @return Closure
+     */
     public static function use(Client $bot): Closure
     {
         return function (Message $message) use ($bot) {
             /** @var BotApi $bot */
             $bot->sendMessage(
                 chatId: $message->getChat()->getId(),
-                text: static::returnMessage(),
+                text: $message->getText(),
             );
         };
     }
 
-
     /**
      * @return string
      */
-    abstract protected static function returnMessage(): string;
+    abstract protected static function getMessage(): string;
 
 }

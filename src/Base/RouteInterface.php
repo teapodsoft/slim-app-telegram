@@ -1,17 +1,14 @@
 <?php
 
-namespace Teapodsoft\Actions;
+namespace Teapodsoft\Base;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
 
 /**
- * InterfaceAction
  *
- * @package Teapodsoft\Actions
- * @description Интерфейс для работы со всеми Action
  */
-interface InterfaceAction
+interface RouteInterface
 {
 
     /**

@@ -2,16 +2,13 @@
 
 namespace Teapodsoft\Telegram\Commands;
 
-use Closure;
 use TelegramBot\Api\Client;
+use Closure;
 
 /**
- * InterfaceCommand
  *
- * @package Teapodsoft\Telegram\Commands
- * @description Интерфейс для работы с Telegram Bot
  */
-interface InterfaceCommand
+interface CommandInterface
 {
 
     /**
