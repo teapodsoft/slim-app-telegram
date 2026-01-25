@@ -23,7 +23,7 @@ abstract class CommandAbstract implements CommandInterface
             /** @var BotApi $bot */
             $bot->sendMessage(
                 chatId: $message->getChat()->getId(),
-                text: $message->getText(),
+                text: static::getMessage(),
             );
         };
     }

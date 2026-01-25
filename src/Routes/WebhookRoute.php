@@ -17,9 +17,9 @@ final class WebhookRoute extends RouteAbstract
 {
 
     /**
-     * @return mixed
+     * @return array
      */
-    public function run(): mixed
+    public function run(): array
     {
         $data = [];
         try {
@@ -50,7 +50,7 @@ final class WebhookRoute extends RouteAbstract
             $data['exception'] = $exception->getMessage();
         }
 
-        return [];
+        return $data;
     }
 
 }
