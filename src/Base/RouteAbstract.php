@@ -2,26 +2,31 @@
 
 namespace Teapodsoft\Base;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use DI\Container;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
+use Teapodsoft\Applications\Interfaces\RouteInterface;
 
 /**
- *
+ * @package Teapodsoft\Base
+ * @description Абстрактный класс для работы со всеми Route схемами из директории /src/Routes
  */
 abstract class RouteAbstract implements RouteInterface
 {
 
     /**
-     * @var Request
+     * @var ServerRequestInterface
      */
-    protected Request $request;
+    protected ServerRequestInterface $request;
 
     /**
-     * @var Response
+     * @var ResponseInterface
      */
-    protected Response $response;
+    protected ResponseInterface $response;
 
+    /**
+     * @var array
+     */
+    protected array $args = [];
 
     /**
      * @param Container $container
@@ -33,15 +38,16 @@ abstract class RouteAbstract implements RouteInterface
     }
 
     /**
-     * @param Request $request
-     * @param Response $response
+     * @param ServerRequestInterface $request
+     * @param ResponseInterface $response
      * @param array $args
-     * @return Response
+     * @return ResponseInterface
      */
-    public function __invoke(Request $request, Response $response, array $args = []): Response
+    public function __invoke(ServerRequestInterface $request, ResponseInterface $response, array $args = []): ResponseInterface
     {
         $this->request = $request;
         $this->response = $response;
+        $this->args = $args;
 
         $content = $this->run();
         if (is_array($content)) {

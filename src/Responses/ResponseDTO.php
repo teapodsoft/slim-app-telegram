@@ -9,23 +9,19 @@ namespace Teapodsoft\Responses;
  * @package Teaposoft\Responses
  * @description Обработчик для работы с единой структурой данных для ответа
  */
-final class ResponseDTO
+readonly final class ResponseDTO
 {
 
     /**
-     * @var string
-     */
-    private string $version = '1.0';
-
-    /**
      * @param mixed $data
+     * @param string $version
      */
     public function __construct(
-        private readonly mixed $data,
+        private mixed  $data,
+        private string $version = '1.0'
     )
     {
     }
-
 
     /**
      * @return string
