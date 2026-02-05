@@ -3,12 +3,12 @@
 namespace Teapodsoft\Telegram\Commands;
 
 use Closure;
-use TelegramBot\Api\BotApi;
-use TelegramBot\Api\Client;
-use TelegramBot\Api\Types\Message;
+use Teapodsoft\Applications\Interfaces\CommandInterface;
+use TelegramBot\Api\{BotApi, Client, Types\Message};
 
 /**
- *
+ * @package Teapodsoft\Telegram\Commands
+ * @description Абстрактный класс для работы с приложением. Используется для обработки сообщений по определенным командам
  */
 abstract class CommandAbstract implements CommandInterface
 {
