@@ -4,9 +4,10 @@ namespace Teapodsoft\Routes\Bot;
 
 use DI\{DependencyException, NotFoundException};
 use OpenApi\Attributes as OA;
-use Teapodsoft\Applications\Interfaces\BotApiInterface;
-use Teapodsoft\Base\RouteAbstract;
-use TelegramBot\Api\{BotApi, Exception, InvalidArgumentException};
+use Teapodsoft\{
+    Applications\Interfaces\BotApiInterface, Base\RouteAbstract
+};
+use TelegramBot\Api\{BotApi, Exception};
 
 /**
  * @package Teaposoft\Routes\Bot
@@ -19,8 +20,7 @@ final class UpdatesRoute extends RouteAbstract
      * @return array
      * @throws DependencyException
      * @throws NotFoundException
-     * @throws Exception
-     * @throws InvalidArgumentException
+     * @throws \Exception
      */
     #[OA\Get(
         path: '/bot/updates',
@@ -78,10 +78,14 @@ final class UpdatesRoute extends RouteAbstract
     public function run(): array
     {
         $data = [];
-        /** @var BotApi $bot */
-        $bot = $this->container->get(BotApiInterface::class);
-        foreach ($bot->getUpdates() as $update) {
-            $data[] = $update->toJson(true);
+        try {
+            /** @var BotApi $bot */
+            $bot = $this->container->get(BotApiInterface::class);
+            foreach ($bot->getUpdates() as $update) {
+                $data[] = $update->toJson(true);
+            }
+        } catch (Exception $exception) {
+            throw new \Exception($exception->getMessage());
         }
         return $data;
     }

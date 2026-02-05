@@ -3,9 +3,11 @@
 namespace Teapodsoft\Routes;
 
 use DI\{DependencyException, NotFoundException};
-use Teapodsoft\Applications\Interfaces\BotClientInterface;
-use Teapodsoft\Applications\Interfaces\CommandInterface;
-use Teapodsoft\Base\RouteAbstract;
+use Teapodsoft\{
+    Applications\Interfaces\BotClientInterface,
+    Applications\Interfaces\CommandInterface,
+    Base\RouteAbstract
+};
 use TelegramBot\Api\{BotApi, Client, InvalidJsonException, Types\Update};
 
 /**

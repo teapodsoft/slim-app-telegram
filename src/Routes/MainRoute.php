@@ -2,10 +2,7 @@
 
 namespace Teapodsoft\Routes;
 
-use Teapodsoft\Base\RouteAbstract;
-use OpenApi\Attributes as OA;
-use Teapodsoft\Helpers\ScriptInfo;
-use Teapodsoft\Responses\ResponseDTO;
+use Teapodsoft\{Base\RouteAbstract, Helpers\ScriptInfo};
 
 /**
  * @package Teaposoft\Routes

@@ -4,8 +4,7 @@ namespace Teapodsoft\Routes\Bot;
 
 use DI\{DependencyException, NotFoundException};
 use OpenApi\Attributes as OA;
-use Teapodsoft\Applications\Interfaces\BotApiInterface;
-use Teapodsoft\Base\RouteAbstract;
+use Teapodsoft\{Applications\Interfaces\BotApiInterface, Base\RouteAbstract};
 use TelegramBot\Api\{BotApi, Exception, InvalidArgumentException};
 
 /**

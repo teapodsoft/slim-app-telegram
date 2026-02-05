@@ -2,14 +2,13 @@
 
 declare(strict_types=1);
 
- use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\MiddlewareInterface;
 use Slim\Interfaces\ErrorHandlerInterface;
-use Teapodsoft\{Secrets};
-use Teapodsoft\Applications\Handlers\ErrorJsonHandler;
-use Teapodsoft\Applications\Interfaces\{BotApiInterface, BotClientInterface, CommandInterface};
-use Teapodsoft\Applications\Interfaces\SwaggerInterface;
-use Teapodsoft\Applications\Middlewares\ResponseJsonMiddleware;
-use Teapodsoft\Telegram\Commands\{DemoCommand, StartCommand};
+use Teapodsoft\{Secrets, Applications\Handlers\ErrorJsonHandler, Applications\Middlewares\ResponseJsonMiddleware};
+use Teapodsoft\Applications\Interfaces\{BotApiInterface, BotClientInterface, CommandInterface, SwaggerInterface};
+use Teapodsoft\Telegram\Commands\{
+    DemoCommand, StartCommand
+};
 use TelegramBot\Api\{BotApi, Client};
 
 /**

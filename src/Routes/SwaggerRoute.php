@@ -4,8 +4,7 @@ namespace Teapodsoft\Routes;
 
 use OpenApi\Attributes as OA;
 use OpenApi\Generator;
-use Teapodsoft\Applications\Interfaces\SwaggerInterface;
-use Teapodsoft\Base\RouteAbstract;
+use Teapodsoft\{Applications\Interfaces\BotApiInterface, Base\RouteAbstract};
 
 /**
  * @package Teaposoft\Routes

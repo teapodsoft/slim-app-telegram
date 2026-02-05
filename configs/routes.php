@@ -4,9 +4,16 @@ declare(strict_types=1);
 
 use Slim\App;
 use Slim\Routing\RouteCollectorProxy;
-use Teapodsoft\Routes\{MainRoute, WebhookRoute, SwaggerRoute};
-use Teapodsoft\Routes\Bot\{BotMeRoute, UpdatesRoute};
-use Teapodsoft\Routes\Bot\Hook\{HookGetRoute, HookDeleteRoute, HookSetRoute};
+use Teapodsoft\Routes\{
+    MainRoute,
+    WebhookRoute,
+    SwaggerRoute,
+    Bot\BotMeRoute,
+    Bot\UpdatesRoute,
+    Bot\Hook\HookGetRoute,
+    Bot\Hook\HookDeleteRoute,
+    Bot\Hook\HookSetRoute,
+};
 
 /**
  * Настройка маршрутизации приложения
