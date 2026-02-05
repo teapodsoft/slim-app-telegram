@@ -2,6 +2,8 @@
 
 namespace Teapodsoft\Applications\Settings;
 
+use Teapodsoft\Applications\Interfaces\SettingsInterface;
+
 /**
  * Settings
  *

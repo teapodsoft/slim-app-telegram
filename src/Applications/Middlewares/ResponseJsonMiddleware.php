@@ -2,26 +2,25 @@
 
 namespace Teapodsoft\Applications\Middlewares;
 
-use Psr\Http\Message\ResponseInterface as Response;
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Server\RequestHandlerInterface as RequestHandler;
+use Psr\Http\Message\{ResponseInterface, ServerRequestInterface};
+use Psr\Http\Server\{MiddlewareInterface, RequestHandlerInterface};
 
 /**
- *
+ * @package Teaposoft\Applications\Middlewares
+ * @description Обработчик Middleware для работы с Json ответом
  */
-final class ResponseJsonMiddleware extends ResponseMiddleware
+final class ResponseJsonMiddleware implements MiddlewareInterface
 {
 
     /**
-     * @param Request $request
-     * @param RequestHandler $handler
-     * @return Response
+     * @param ServerRequestInterface $request
+     * @param RequestHandlerInterface $handler
+     * @return ResponseInterface
      */
-    public function process(Request $request, RequestHandler $handler): Response
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $response = parent::process($request, $handler);
-        return $response
-            ->withHeader('Content-type', 'application/json');
+        $response = $handler->handle($request);
+        return $response->withHeader('Content-Type', 'application/json');
     }
 
 }

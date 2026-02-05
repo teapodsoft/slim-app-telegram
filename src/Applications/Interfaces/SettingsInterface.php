@@ -1,6 +1,6 @@
 <?php
 
-namespace Teapodsoft\Applications\Settings;
+namespace Teapodsoft\Applications\Interfaces;
 
 /**
  * SettingsInterface

@@ -2,7 +2,7 @@
 
 namespace Teapodsoft\Applications\ResponseEmitter;
 
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
 use Slim\ResponseEmitter as SlimResponseEmitter;
 
 /**
@@ -15,22 +15,22 @@ class ResponseEmitter extends SlimResponseEmitter
 {
 
     /**
-     * @param Response $response
+     * @param ResponseInterface $response
      * @return void
      */
-    public function emit(Response $response): void
+    public function emit(ResponseInterface $response): void
     {
         $origin = $_SERVER['HTTP_ORIGIN'] ?? '';
 
         $response = $response
             ->withHeader('Access-Control-Allow-Credentials', 'true')
             ->withHeader('Access-Control-Allow-Origin', $origin)
+            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
+            ->withHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0')
             ->withHeader(
                 'Access-Control-Allow-Headers',
                 'X-Requested-With, Content-Type, Accept, Origin, Authorization'
             )
-            ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
-            ->withHeader('Cache-Control', 'no-cache, no-store, must-revalidate, max-age=0')
             ->withAddedHeader('Cache-Control', 'post-check=0, pre-check=0')
             ->withHeader('Pragma', 'no-cache');
 
