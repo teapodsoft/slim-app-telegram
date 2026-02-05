@@ -2,13 +2,14 @@
 
 namespace Teapodsoft\Routes;
 
-use Teapodsoft\Applications\SwaggerInterface;
-use Teapodsoft\Base\RouteAbstract;
 use OpenApi\Attributes as OA;
 use OpenApi\Generator;
+use Teapodsoft\Applications\Interfaces\SwaggerInterface;
+use Teapodsoft\Base\RouteAbstract;
 
 /**
- *
+ * @package Teaposoft\Routes
+ * @description Обработчик Routes "/json-schema"
  */
 #[OA\Info(
     version: '1.0.0',
@@ -30,11 +31,11 @@ final class SwaggerRoute extends RouteAbstract
     {
         try {
             $swaggerRoutes = $this->container->get(SwaggerInterface::class);
+            $swaggerApi = new Generator()->generate($swaggerRoutes);
+            return $swaggerApi->toJson();
         } catch (\Throwable) {
-            $swaggerRoutes = [];
+            return '';
         }
 
-        $swaggerApi = new Generator()->generate($swaggerRoutes);
-        return $swaggerApi->toJson();
     }
 }

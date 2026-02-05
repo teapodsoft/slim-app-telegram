@@ -2,17 +2,25 @@
 
 namespace Teapodsoft\Routes\Bot\Hook;
 
-use Teapodsoft\Base\RouteAbstract;
+use DI\{DependencyException, NotFoundException};
 use OpenApi\Attributes as OA;
-use Teapodsoft\Telegram\BotApiInterface;
-use TelegramBot\Api\BotApi;
+use Teapodsoft\Applications\Interfaces\BotApiInterface;
+use Teapodsoft\Base\RouteAbstract;
+use TelegramBot\Api\{BotApi, Exception};
 
 /**
- *
+ * @package Teapodsoft\Routes\Bot\Hook
+ * @description Обработчик Routes "/bot/hook/delete"
  */
 final class HookDeleteRoute extends RouteAbstract
 {
 
+    /**
+     * @return array
+     * @throws DependencyException
+     * @throws NotFoundException
+     * @throws Exception
+     */
     #[OA\Get(
         path: '/bot/hook/delete',
         description: 'Delete installed webhook',
@@ -39,14 +47,9 @@ final class HookDeleteRoute extends RouteAbstract
     public function run(): array
     {
         $data = [];
-        try {
-            /** @var BotApi $bot */
-            $bot = $this->container->get(BotApiInterface::class);
-            $data['result'] = $bot->deleteWebhook();
-        } catch (\Throwable $exception) {
-            $this->response->withStatus(500);
-            $data['exception'] = $exception->getMessage();
-        }
+        /** @var BotApi $bot */
+        $bot = $this->container->get(BotApiInterface::class);
+        $data['result'] = $bot->deleteWebhook();
         return $data;
     }
 

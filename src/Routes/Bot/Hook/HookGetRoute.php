@@ -2,18 +2,26 @@
 
 namespace Teapodsoft\Routes\Bot\Hook;
 
-use Teapodsoft\Base\RouteAbstract;
+use DI\{DependencyException, NotFoundException};
 use OpenApi\Attributes as OA;
-use Teapodsoft\Secrets;
-use Teapodsoft\Telegram\BotApiInterface;
-use TelegramBot\Api\BotApi;
+use Teapodsoft\Applications\Interfaces\BotApiInterface;
+use Teapodsoft\Base\RouteAbstract;
+use TelegramBot\Api\{BotApi, Exception, InvalidArgumentException};
 
 /**
- *
+ * @package Teapodsoft\Routes\Bot\Hook
+ * @description Обработчик Routes "/bot/hook/get"
  */
 final class HookGetRoute extends RouteAbstract
 {
 
+    /**
+     * @return array
+     * @throws DependencyException
+     * @throws NotFoundException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
     #[OA\Get(
         path: '/bot/hook/get',
         description: 'Get current installed webhook from Telegram Bot',
@@ -43,17 +51,9 @@ final class HookGetRoute extends RouteAbstract
     )]
     public function run(): array
     {
-        $data = [];
-        try {
-            /** @var BotApi $bot */
-            $bot = $this->container->get(BotApiInterface::class);
-            $data = $bot->getWebhookInfo()->toJson(true);
-        } catch (\Throwable $exception) {
-            $this->response->withStatus(500);
-            $data['exception'] = $exception->getMessage();
-        }
-
-        return $data;
+        /** @var BotApi $bot */
+        $bot = $this->container->get(BotApiInterface::class);
+        return $bot->getWebhookInfo()->toJson(true);
     }
 
 }

@@ -2,17 +2,26 @@
 
 namespace Teapodsoft\Routes\Bot;
 
-use Teapodsoft\Base\RouteAbstract;
+use DI\{DependencyException, NotFoundException};
 use OpenApi\Attributes as OA;
-use Teapodsoft\Telegram\BotApiInterface;
-use TelegramBot\Api\BotApi;
+use Teapodsoft\Applications\Interfaces\BotApiInterface;
+use Teapodsoft\Base\RouteAbstract;
+use TelegramBot\Api\{BotApi, Exception, InvalidArgumentException};
 
 /**
- *
+ * @package Teaposoft\Routes\Bot
+ * @description Обработчик Routes "/bot/me"
  */
 final class BotMeRoute extends RouteAbstract
 {
 
+    /**
+     * @return array
+     * @throws DependencyException
+     * @throws NotFoundException
+     * @throws Exception
+     * @throws InvalidArgumentException
+     */
     #[OA\Get(
         path: '/bot/me',
         description: 'Get Telegram Bot information',
@@ -42,19 +51,11 @@ final class BotMeRoute extends RouteAbstract
             ]
         )
     )]
-    public function run(): array|string
+    public function run(): array
     {
-        $data = [];
-        try {
-            /** @var BotApi $bot */
-            $bot = $this->container->get(BotApiInterface::class);
-            $data = $bot->getMe()->toJson(true);
-        } catch (\Throwable $exception) {
-            $this->response->withStatus(500);
-            $data['exception'] = $exception->getMessage();
-        }
-
-        return $data;
+        /** @var BotApi $bot */
+        $bot = $this->container->get(BotApiInterface::class);
+        return $bot->getMe()->toJson(true);
     }
 
 }
