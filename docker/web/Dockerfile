@@ -1,4 +1,8 @@
+FROM composer/composer:2-bin as composer
 FROM php:8.4.8-apache
+
+# Install composer into PHP container
+COPY --from=composer /composer /usr/bin/composer
 
 RUN apt-get update && apt-get install -y \
         curl wget git zip unzip \

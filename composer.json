@@ -1,6 +1,6 @@
 {
     "name": "teapodsoft/slim-app-telegram",
-    "description": "TeapodSoft Slim Framework Telegram",
+    "description": "TeapodSoft Telegram Bot Integrations",
     "type": "project",
     "minimum-stability": "stable",
     "version": "1.1.0",
@@ -25,12 +25,12 @@
     },
     "require": {
         "php": ">=8.4",
-        "composer/composer": "*",
         "php-di/php-di": "^7.1",
         "slim/psr7": "1.8.*",
         "slim/slim": "4.*",
         "teapodlibs/env": "1.0.0",
         "teapodlibs/secrets": "1.0.0",
+        "teapodlibs/composer": "1.0.0",
         "telegram-bot/api": "*",
         "zircote/swagger-php": "^6.0"
     },
