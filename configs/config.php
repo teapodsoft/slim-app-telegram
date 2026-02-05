@@ -2,11 +2,15 @@
 
 declare(strict_types=1);
 
+ use Psr\Http\Server\MiddlewareInterface;
+use Slim\Interfaces\ErrorHandlerInterface;
+use Teapodsoft\{Secrets};
+use Teapodsoft\Applications\Handlers\ErrorJsonHandler;
+use Teapodsoft\Applications\Interfaces\{BotApiInterface, BotClientInterface, CommandInterface};
+use Teapodsoft\Applications\Interfaces\SwaggerInterface;
 use Teapodsoft\Applications\Middlewares\ResponseJsonMiddleware;
-use Teapodsoft\Applications\Settings\SettingsInterface;
-use Teapodsoft\Applications\SwaggerInterface;
-use Teapodsoft\Telegram\Commands\CommandInterface;
-use Psr\Http\Server\MiddlewareInterface;
+use Teapodsoft\Telegram\Commands\{DemoCommand, StartCommand};
+use TelegramBot\Api\{BotApi, Client};
 
 /**
  * Файл с настройками приложения
@@ -17,22 +21,28 @@ return [
         ResponseJsonMiddleware::class,
     ],
 
-    // Настройки приложения для работы
-    SettingsInterface::class => [
-        'displayErrorDetails' => true,
-        'logErrors' => false,
-        'logErrorDetails' => false,
-    ],
+    // Настройка ErrorHandler для работы
+    ErrorHandlerInterface::class => ErrorJsonHandler::class,
 
-    // Настройки для работы со Swagger. Передаем директории для чтения
+    // Swagger
     SwaggerInterface::class => [
-        $_SERVER['DOCUMENT_ROOT'] . '/src/Routes',
+        dirname(getcwd()) . '/src/Routes',
     ],
 
     // Настройки Telegram Bot клиента для запуска консольных команд
     CommandInterface::class => [
-        'start' => \Teapodsoft\Telegram\Commands\StartCommand::class,
-        'demo' => \Teapodsoft\Telegram\Commands\DemoCommand::class,
+        'start' => StartCommand::class,
+        'demo' => DemoCommand::class,
     ],
+
+    // Настройка BotApi для работы с Telegram
+    BotApiInterface::class => function () {
+        return new BotApi(Secrets::get('TOKEN', '', 'telegram'));
+    },
+
+    // Настройка BotClient для работы с Telegram
+    BotClientInterface::class => function () {
+        return new Client(Secrets::get('TOKEN', '', 'telegram'));
+    },
 
 ];

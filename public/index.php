@@ -3,11 +3,13 @@
 use Teapodsoft\Applications\Application;
 use Teapodsoft\Env;
 
-require_once dirname(__DIR__) . '/vendor/autoload.php';
+$rootPath = dirname(__DIR__);
 
-Env::load(dirname(__DIR__), '.env');
+require_once $rootPath . '/vendor/autoload.php';
+
+Env::load($rootPath, '.env');
 
 new Application(
-    config: require dirname(__DIR__) . '/configs/config.php',
-    routes: require dirname(__DIR__) . '/configs/routes.php',
+    routes: require $rootPath . '/configs/routes.php',
+    config: require $rootPath . '/configs/config.php',
 )->run();
